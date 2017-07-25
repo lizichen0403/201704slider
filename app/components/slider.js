@@ -12,11 +12,18 @@ export default class Slider extends Component{
         if(index>this.props.images.length){
             this.sliders.style.transitionDuration='0s';
             this.sliders.style.left=0;
+            getComputedStyle(this.sliders,null).left;
             index=1;
-            setTimeout(()=>{
-                this.sliders.style.transitionDuration='1s';
-                this.setState({index});
-            },20);
+            this.sliders.style.transitionDuration='1s';
+            this.setState({index});
+            return;
+        }else if(index<0){
+            this.sliders.style.transitionDuration='0s';
+            this.sliders.style.left=(this.props.images.length)*-300+'px';
+            getComputedStyle(this.sliders,null).left;
+            index=this.props.images.length-1;
+            this.sliders.style.transitionDuration='1s';
+            this.setState({index});
             return;
         }
         this.setState({index});
@@ -24,7 +31,7 @@ export default class Slider extends Component{
     //开始自动轮播,鼠标经过时暂停自动轮播,移走后开启轮播
     go=()=>{
         this.timer=setInterval(()=>{
-            this.turn(1);
+            this.turn(-1);
         },2000);//每隔两秒钟让index＋1
     }
     componentDidMount(){
