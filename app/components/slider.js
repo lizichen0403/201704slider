@@ -36,3 +36,4 @@ export default class Slider extends Component{
         )
     }
 }
+
