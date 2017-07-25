@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import './slider.less';
 import SliderItems from "./sliderItems";
+import SliderArrows from "./SliderArrows";
 export default class Slider extends Component{
     constructor(){
         super();
@@ -14,7 +15,7 @@ export default class Slider extends Component{
             this.sliders.style.left=0;
             getComputedStyle(this.sliders,null).left;
             index=1;
-            this.sliders.style.transitionDuration='1s';
+            this.sliders.style.transitionDuration=this.props.speed+'s';
             this.setState({index});
             return;
         }else if(index<0){
@@ -22,7 +23,7 @@ export default class Slider extends Component{
             this.sliders.style.left=(this.props.images.length)*-300+'px';
             getComputedStyle(this.sliders,null).left;
             index=this.props.images.length-1;
-            this.sliders.style.transitionDuration='1s';
+            this.sliders.style.transitionDuration=this.props.speed+'s';
             this.setState({index});
             return;
         }
@@ -32,11 +33,13 @@ export default class Slider extends Component{
     go=()=>{
         this.timer=setInterval(()=>{
             this.turn(-1);
-        },2000);//每隔两秒钟让index＋1
+        },this.props.delay*1000);//每隔两秒钟让index＋1
     }
     componentDidMount(){
-        this.sliders=document.querySelector('.sliders');
-        this.go();
+        if(this.props.autoPlay){
+            this.sliders=document.querySelector('.sliders');
+            this.go();
+        }
     }
     render(){
         return (
@@ -46,7 +49,9 @@ export default class Slider extends Component{
                 <SliderItems
                     images={this.props.images}
                     index={this.state.index}
+                    speed={this.props.speed}
                 />
+                <SliderArrows/>
             </div>
         )
     }
