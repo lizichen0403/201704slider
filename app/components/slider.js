@@ -5,10 +5,22 @@ export default class Slider extends Component{
         super();
         this.state={index:0};
     }
-    componentDidMount(){
+    //移动index
+    turn=(step)=>{
+        let index=this.state.index+step;
+        if(index>=this.props.images.length){
+            index=0;
+        }
+        this.setState({index})
+    }
+    //开始自动轮播,鼠标经过时暂停自动轮播,移走后开启轮播
+    go=()=>{
         this.timer=setInterval(()=>{
-            this.setState({index:this.state.index+1})
+            this.turn(1);
         },2000);//每隔两秒钟让index＋1
+    }
+    componentDidMount(){
+        this.go();
     }
     render(){
         let style={//给ul增加自定义样式对象
@@ -17,7 +29,7 @@ export default class Slider extends Component{
             transitionDuration:'1s'//渐变的时间是1秒
         }
         return (
-            <div className="slider-wrapper">
+            <div className="slider-wrapper" onMouseOver={()=>clearInterval(this.timer)} onMouseOut={this.go}>
                 <ul className="sliders" style={style}>
                     {
                         this.props.images.map((image,index)=>(
