@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Slider from './components/slider';
+import Slider from './components/Slider';
 import './index.less';
 const IMAGES=[
     {src:require('./images/1.jpg')},
