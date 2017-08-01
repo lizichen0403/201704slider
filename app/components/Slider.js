@@ -61,8 +61,8 @@ export default class Slider extends Component{
                  onMouseOut={this.go}>
                 <SliderItems
                     images={this.props.images}
-                    index={this.state.index}
                     speed={this.props.speed}
+                    index={this.state.index}
                 />
                 {this.props.arrows?<SliderArrows turn={this.turn}/>:null}
                 {this.props.dots?<SliderDots images={this.props.images} turn={this.turn} index={this.state.index}/>:null}

@@ -15,5 +15,11 @@ export default {
     readUser(){
         let usersStr=localStorage.getItem(USERS);
         return usersStr?JSON.parse(usersStr):[];
+    },
+    delUser(id){
+        let usersStr=localStorage.getItem(USERS);
+        let users=usersStr?JSON.parse(usersStr):[];
+        users=users.filter(user=>user.id!==id);
+        localStorage.setItem(USERS,JSON.stringify(users));
     }
 }

@@ -11,6 +11,10 @@ export default class UserDetail extends Component{
         let user=users.find(item=>item.id==id);
         this.setState({user});
     }
+    handleClick=()=>{
+        utils.delUser(this.state.user.id);
+        this.props.history.push("/user/list");
+    }
     render(){
         // console.log(this.props.match);
         return (
@@ -24,7 +28,7 @@ export default class UserDetail extends Component{
                     邮箱: {this.state.user.email}<br/>
                 </div>
                 <div className="panel-footer">
-                    <button className="btn btn-danger">删除</button>
+                    <button className="btn btn-danger" onClick={this.handleClick}>删除</button>
                 </div>
             </div>
         )
