@@ -1,21 +1,14 @@
 import React from 'react';
-import store from '../store';
-import * as types from '../action-types';
-export default class Todos extends React.Component{
-    constructor(){
-        super();
-        this.state={list:store.getState().todos.list};
-    }
-    componentDidMount(){
-        store.subscribe(()=>{
-            this.setState({list:store.getState().todos.list});
-        })
-    }
+import {bindActionCreators} from 'redux';
+import * as  types from '../action-types';
+import actions from '../actions';
+import {connect} from 'react-redux';
+class Todos extends React.Component{
     handleKeyDown=(event)=>{
         let keyCode=event.keyCode;
         if(keyCode==13){
             let text=event.target.value;
-            store.dispatch({type:types.ADD_TODO,text});
+            this.props.addTodo(text);
             event.target.value='';
         }
     }
@@ -25,8 +18,8 @@ export default class Todos extends React.Component{
                 <input type="text" onKeyDown={this.handleKeyDown}/>
                 <ul>
                     {
-                        this.state.list.map((item,index)=>(
-                            <li key={index}>{item}</li>
+                        this.props.list.map((item,index)=>(
+                            <li key={index}>{item}<button onClick={()=>this.props.deleteTodo(index)}>-</button></li>
                         ))
                     }
                 </ul>
@@ -34,3 +27,14 @@ export default class Todos extends React.Component{
         )
     }
 }
+let mapStateToProps=state=>({
+    list:state.todos.list
+});
+let mapDispatchToProps=dispatch=>({
+    addTodo:(text)=>dispatch({type:types.ADD_TODO,text}),
+    deleteTodo:(index)=>dispatch({type:types.DELETE_TODO,index})
+});
+// let mapDispatchToProps=dispatch=>bindActionCreators(actions,dispatch);
+export default connect(
+    mapStateToProps,mapDispatchToProps
+)(Todos);

@@ -1,10 +1,8 @@
 import React from 'react';
-import store from '../store';
-import * as types from '../action-types';
 import {bindActionCreators} from 'redux';
 import actions from '../actions';
 //connect用来连接组件和store
-import {connect} from '../react-redux';
+import {connect} from 'react-redux';
 //UI组件 木偶组件 傻瓜组件
 //容器组件  智能组件  聪明组件
 class Counter extends React.Component{
