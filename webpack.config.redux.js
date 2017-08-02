@@ -2,7 +2,7 @@ let path=require('path');
 let HtmlWebpackPlugin=require('html-webpack-plugin');
 module.exports={
     //打包的入口文件
-    entry:path.resolve('./highorder/index.js'),
+    entry:path.resolve('./combine/index.js'),
     //配置输出的目录和文件名
     output:{
         //打包后的文件保存的目录
